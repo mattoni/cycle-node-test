@@ -1,3 +1,12 @@
+Docker Magic:
+ - Development: 
+    - Build: `docker build --target compiler -t react-app-dev .`
+    - Run: `docker run --rm -ti -v "$(pwd)"/src:/build/src -p 3000:3000 react-app-dev npm start`
+ - Prod
+    - Build: `docker build -t react-app .`
+    - Run: `docker run --rm -ti -p 3000:80 react-app`
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

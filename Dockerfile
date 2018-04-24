@@ -1,15 +1,16 @@
 FROM node:alpine AS compiler
-WORKDIR /build
-RUN apk update && apk upgrade && apk add --no-cache bash openssh
+WORKDIR /app
+RUN apk update && apk upgrade
 ADD package.json .
 RUN npm install
 COPY . .
 RUN npm run build
 
 FROM node:alpine
-WORKDIR /dist
+WORKDIR /app
 COPY package.json .
-COPY --from=compiler /build/dist .
+COPY --from=compiler /app/build ./build
+COPY --from=compiler /app/server ./server
 RUN npm install --production
 EXPOSE 80
-CMD ["node", "dist"]
+CMD ["node", "server/index.js"]
